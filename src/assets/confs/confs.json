@@ -1,0 +1,13 @@
+{
+  "links": [
+    {
+      "home": "/"
+    },
+    {
+      "Add Movie": "/add-movie"
+    },
+    {
+      "Edit movie": "/edit-movie"
+    }
+  ]
+}

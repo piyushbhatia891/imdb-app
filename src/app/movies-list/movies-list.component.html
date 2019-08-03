@@ -1,0 +1,54 @@
+<div class="movies-list">
+  <div class="list-container">
+    <div class="add-movie">
+      <span (click)="addNewMovie()"><i class="fa fa-plus"></i></span>
+    </div>
+    <div class="list-item" *ngFor="let movie of moviesValues">
+      <div *ngIf="!movie.editable">
+        <div class="item-header">
+          <div class="header-left">
+            <span>{{ movie.name }}</span
+            ><span class="subtitle-text" *ngIf="movie.releaseDate != ''"
+              >({{ movie.releaseDate.getFullYear() }})</span
+            >
+          </div>
+          <div class="header-right">
+            <span *ngFor="let producer of movie.producers"
+              ><p>{{ producer }},</p></span
+            ><span (click)="editMovie(movie)"
+              ><i class="fa fa-pencil-square-o"></i
+            ></span>
+          </div>
+        </div>
+        <div class="item-actors">
+          <span *ngFor="let actor of movie.actors">{{ actor }}</span>
+        </div>
+      </div>
+      <div *ngIf="movie.editable">
+        <div class="item-header">
+          <div class="header-left">
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="movie.name"
+              value="{{ movie.name }}"
+            />
+            <span class="subtitle-text"
+              >({{ !movie.releaseDate.getFullYear() }})</span
+            >
+          </div>
+          <div class="header-right">
+            <span *ngFor="let producer of movie.producers"
+              ><p>{{ producer }},</p></span
+            ><span (click)="editMovie(movie)"
+              ><i class="fa fa-pencil-square-o"></i
+            ></span>
+          </div>
+        </div>
+        <div class="item-actors">
+          <span *ngFor="let actor of movie.actors">{{ actor }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
