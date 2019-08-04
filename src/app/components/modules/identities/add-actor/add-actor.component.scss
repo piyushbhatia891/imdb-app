@@ -1,0 +1,18 @@
+@import "../../../../../assets/styles/base.scss";
+@import "../../../../../assets/styles/colors.scss";
+:host {
+  .actors-list {
+    @extend .list;
+    .list-container {
+      @extend .container;
+    }
+  }
+  form {
+    div {
+      @extend .form-div;
+      .is-invalid {
+        @extend .invalid;
+      }
+    }
+  }
+}

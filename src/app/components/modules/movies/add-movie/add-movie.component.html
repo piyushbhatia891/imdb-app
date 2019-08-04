@@ -1,0 +1,94 @@
+<div class="movies-list">
+  <div class="list-container">
+      <app-page-title [header]="header"></app-page-title>
+    <div class="add-mmovie-container">
+      <form [formGroup]="formVal" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Movie Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+          />
+          <span *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <span *ngIf="f.name.errors.required">Movie Name is required</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label>Release date</label>
+          <input
+            type="date"
+            formControlName="releaseDate"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.releaseDate.errors }"
+          />
+          <div
+            *ngIf="submitted && f.releaseDate.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.releaseDate.errors.required">
+              Movie releaseDate is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Plot</label>
+          <input
+            type="text"
+            formControlName="plot"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.plot.errors }"
+          />
+          <span *ngIf="submitted && f.plot.errors" class="invalid-feedback">
+            <span *ngIf="f.plot.errors.required">Movie plot is required</span>
+          </span>
+        </div>
+        <div formArrayName="actors">
+          <div
+            *ngFor="let emp of actorsArray.controls; let idx = index"
+            [formGroupName]="idx"
+            class="actors"
+          >
+            <p>
+              Name :
+              <select formControlName="name">
+                <option *ngFor="let actor of actorsList" [ngValue]="actor.name">
+                  {{ actor.name }}
+                </option>
+              </select>
+            </p>
+          </div>
+          <button mat-raised-button color="primary" (click)="addActor()">
+            Add More Actors
+          </button>
+        </div>
+        <div formArrayName="producers">
+          <div
+            *ngFor="let producer of producersArray.controls; let idx = index"
+            [formGroupName]="idx"
+            class="producers"
+          >
+            <p>
+              Name :
+              <select formControlName="name">
+                <option
+                  *ngFor="let producer of producersList"
+                  [ngValue]="producer.name"
+                >
+                  {{ producer.name }}
+                </option>
+              </select>
+            </p>
+          </div>
+          <button mat-raised-button color="primary" (click)="addProducer()">
+            Add More Producers
+          </button>
+        </div>
+        <div class="form-group">
+          <button mat-raised-button color="accent">Add New Movie</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

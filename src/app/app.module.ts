@@ -1,53 +1,28 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { MaterialModule } from "./modules/material/material.module";
+import { RouterModule } from "@angular/router";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "../environments/environment";
-import { FormsModule } from "@angular/forms";
-import { AppComponent } from "./app.component";
-import { MoviesListComponent } from "./movies-list/movies-list.component";
-import { AddMovieComponent } from "./add-movie/add-movie.component";
-import { EditMovieComponent } from "./edit-movie/edit-movie.component";
-import { FirebaseStoreDatePipe } from "./shared/firebase-store-date.pipe";
+import { ComponentsModule } from "./components/components.module";
+import { RoutingModule } from "./routing/routing.module";
+import { ToastrModule } from "ngx-toastr";
 
-const routes: Routes = [
-  {
-    path: "movies-list",
-    component: MoviesListComponent
-  },
-  {
-    path: "add-movie",
-    component: AddMovieComponent
-  },
-  {
-    path: "edit-movie",
-    component: EditMovieComponent
-  },
-  {
-    path: "**",
-    redirectTo: "movies-list",
-    pathMatch: "full"
-  }
-];
+import { AppComponent } from "./app.component";
+import { FirebaseStoreDatePipe } from "./shared/pipes/firebase-store-date.pipe";
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    MoviesListComponent,
-    AddMovieComponent,
-    EditMovieComponent,
-    FirebaseStoreDatePipe
-  ],
+  declarations: [AppComponent, FirebaseStoreDatePipe],
   imports: [
     BrowserModule,
-    FormsModule,
-    MaterialModule,
-    RouterModule.forRoot(routes),
+    ComponentsModule,
+    RoutingModule,
     AngularFontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase, "imdb-app"),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    RouterModule,
+    ToastrModule.forRoot()
   ],
   providers: [FirebaseStoreDatePipe],
   bootstrap: [AppComponent]

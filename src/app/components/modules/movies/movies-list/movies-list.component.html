@@ -1,0 +1,88 @@
+<div class="movies-list">
+  <div class="list-container">
+    <div class="list-item" *ngFor="let movie of moviesValues">
+      <ng-container *ngIf="!movie.editable; else editable">
+        <div class="item-header">
+          <div class="header-left">
+            <input
+              *ngIf="movie.editable"
+              type="text"
+              name="name"
+              [(ngModel)]="movie.name"
+              value="{{ movie.name }}"
+            />
+            <span *ngIf="!movie.editable">{{ movie.name }}</span
+            ><span class="subtitle-text" *ngIf="movie.releaseDate != ''"
+              >({{ movie.releaseDate | date: "longDate" }})</span
+            >
+          </div>
+          <div class="header-right">
+            <ng-container
+              *ngIf="movie.producers.length == 1; else producersList"
+            >
+              <span *ngFor="let producer of movie.producers">{{
+                producer.name
+              }}</span>
+            </ng-container>
+
+            <ng-template #producersList>
+              <span *ngFor="let producer of movie.producers"
+                >{{ producer.name }},
+              </span>
+            </ng-template>
+            <span (click)="editMovie(movie)" *ngIf="!movie.editable">
+              <i class="fa fa-pencil-square-o"></i>
+            </span>
+            <span (click)="saveMovie(movie)" *ngIf="movie.editable"
+              ><i class="fa fa-save"></i
+            ></span>
+          </div>
+        </div>
+        <div class="item-actors">
+          <ng-container *ngIf="movie.actors.length == 1; else actorsList">
+            <span *ngFor="let actor of movie.actors">{{ actor.name }}</span>
+          </ng-container>
+          <ng-template #actorsList>
+            <span *ngFor="let actor of movie.actors">{{ actor.name }}, </span>
+          </ng-template>
+        </div>
+      </ng-container>
+      <ng-template #editable>
+        <div class="item-header">
+          <div class="header-left">
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="movie.name"
+              value="{{ movie.name }}"
+            />
+            <span class="subtitle-text" *ngIf="movie.releaseDate != ''"
+              >({{ movie.releaseDate | date: "longDate" }})</span
+            >
+          </div>
+          <div class="header-right">
+            <span *ngFor="let producer of movie.producers">
+              <input
+                type="text"
+                name="name"
+                [(ngModel)]="producer.name"
+                value="{{ producer.name }}"
+            /></span>
+            <span (click)="saveMovie(movie)" *ngIf="movie.editable"
+              ><i class="fa fa-save"></i
+            ></span>
+          </div>
+        </div>
+        <div class="item-actors">
+          <span *ngFor="let actor of movie.actors">
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="actor.name"
+              value="{{ actor.name }}"
+          /></span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

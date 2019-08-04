@@ -1,0 +1,25 @@
+@import "../../../../../assets/styles/base.scss";
+@import "../../../../../assets/styles/colors.scss";
+:host {
+  .movies-list {
+    @extend .list;
+    .list-container {
+      @extend .container;
+      .list-item {
+        @extend .item;
+        .item-header {
+          display: flex;
+          justify-content: space-between;
+          font-size: $spacing-lg;
+          .header-left {
+            padding: $spacing-md;
+            span.subtitle-text {
+              color: $color;
+              margin-left: $spacing-md;
+            }
+          }
+        }
+      }
+    }
+  }
+}

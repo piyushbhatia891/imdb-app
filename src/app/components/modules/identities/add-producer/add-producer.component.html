@@ -1,0 +1,55 @@
+<div class="producers-list">
+  <div class="list-container">
+    <app-page-title [header]="header"></app-page-title>
+    <div class="add-producer-container">
+      <form [formGroup]="formVal" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Producer Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+          />
+          <span *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <span *ngIf="f.name.errors.required">Actor Name is required</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label>Dob</label>
+          <input
+            type="date"
+            formControlName="dob"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"
+          />
+          <span *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+            <span *ngIf="f.dob.errors.required">
+              Producer dob is required
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Sex</label>
+          <input
+            type="text"
+            formControlName="sex"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.sex.errors }"
+          />
+          <span *ngIf="submitted && f.sex.errors" class="invalid-feedback">
+            <span *ngIf="f.sex.errors.required">sex is required</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label>Bio</label>
+          <input type="text" formControlName="bio" class="form-control" />
+        </div>
+        <div class="form-group">
+          <button mat-raised-button color="accent">Add New Producer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

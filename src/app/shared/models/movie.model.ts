@@ -5,6 +5,7 @@ import { Timestamp } from "rxjs";
 export interface Movie {
   id: string;
   name: string;
+  date: Date;
   releaseDate: Date;
   plot: string;
   poster: string;

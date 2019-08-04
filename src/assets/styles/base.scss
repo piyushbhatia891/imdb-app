@@ -1,1 +1,35 @@
-@import url("https://fonts.googleapis.com/css?family=Quicksand");
+@import "./size.scss";
+.list {
+  color: black;
+  display: flex;
+  justify-content: center;
+  width: $width-half;
+  border-radius: $spacing-xs;
+  border: $border-width solid $border-color;
+  margin: 0 auto;
+}
+.container {
+  box-shadow: $box-shadow;
+  border-radius: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  margin: $spacing-md;
+
+  padding: $spacing-md2;
+  width: $width-full;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  margin: $spacing-md2;
+  border-bottom: 1px solid $border-color;
+}
+.form-div {
+  display: flex;
+  justify-content: space-evenly;
+  padding: $spacing-md2;
+}
+.invalid {
+  border-color: rgb(216, 12, 12);
+  color: rgb(230, 14, 14);
+}

@@ -5,7 +5,9 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { Subject, Observable } from "rxjs";
-import { Movie, MovieObject } from "../movie.model";
+import { Movie, MovieObject } from "../models/movie.model";
+import { Actor } from "../models/actor.model";
+import { Producer } from "../models/producer.model";
 @Injectable({
   providedIn: "root"
 })
@@ -39,14 +41,23 @@ export class MovieService {
       .collection("movies")
       .doc(movie.id)
       .set(movie);
-    return this.getMovies();
   }
-  addNewMovie(movie: Movie) {
-    return this.firebaseStore.collection("movies").add(movie);
-  }
+
   addNewMovie2(movie: MovieObject) {
     this.firebaseStore
       .collection<MovieObject>("movies")
       .add(JSON.parse(JSON.stringify(movie)));
+  }
+
+  addNewActor(actor: Actor) {
+    this.firebaseStore
+      .collection<MovieObject>("actors")
+      .add(JSON.parse(JSON.stringify(actor)));
+  }
+
+  addNewProducer(producer: Producer) {
+    this.firebaseStore
+      .collection<MovieObject>("producers")
+      .add(JSON.parse(JSON.stringify(producer)));
   }
 }

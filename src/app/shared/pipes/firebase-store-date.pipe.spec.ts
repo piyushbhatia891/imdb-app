@@ -1,4 +1,4 @@
-import { FirebaseStoreDatePipe } from './firebase-store-date.pipe';
+import { FirebaseStoreDatePipe } from '../firebase-store-date.pipe';
 
 describe('FirebaseStoreDatePipe', () => {
   it('create an instance', () => {
