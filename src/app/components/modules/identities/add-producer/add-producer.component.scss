@@ -9,9 +9,14 @@
   }
   form {
     div {
-      @extend .form-div;
-      .is-invalid {
-        @extend .invalid;
+      width: $width-full;
+      display: flex;
+      justify-content: center;
+      div {
+        @extend .form-div;
+        .is-invalid {
+          @extend .invalid;
+        }
       }
     }
   }

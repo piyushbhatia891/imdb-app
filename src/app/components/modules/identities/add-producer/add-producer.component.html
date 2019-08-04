@@ -3,6 +3,7 @@
     <app-page-title [header]="header"></app-page-title>
     <div class="add-producer-container">
       <form [formGroup]="formVal" (ngSubmit)="onSubmit()">
+        <div>
         <div class="form-group">
           <label>Producer Name</label>
           <input
@@ -15,6 +16,8 @@
             <span *ngIf="f.name.errors.required">Actor Name is required</span>
           </span>
         </div>
+      </div>
+      <div>
         <div class="form-group">
           <label>Dob</label>
           <input
@@ -29,7 +32,8 @@
             </span>
           </span>
         </div>
-
+      </div>
+      <div>
         <div class="form-group">
           <label>Sex</label>
           <input
@@ -42,10 +46,13 @@
             <span *ngIf="f.sex.errors.required">sex is required</span>
           </span>
         </div>
+      </div>
+      <div>
         <div class="form-group">
           <label>Bio</label>
           <input type="text" formControlName="bio" class="form-control" />
         </div>
+      </div>
         <div class="form-group">
           <button mat-raised-button color="accent">Add New Producer</button>
         </div>
