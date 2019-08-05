@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MovieService } from "../../../../shared/services/movie.service";
 import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { ToastService } from "src/app/shared/toastr.service";
+import { ToastService } from "src/app/shared/services/toastr.service";
 @Component({
   selector: "app-add-actor",
   templateUrl: "./add-actor.component.html",
@@ -34,13 +33,12 @@ export class AddActorComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    let actor = this.formVal.value;
-    this.actor = actor;
-    this.service.addNewActor(this.actor);
     if (this.formVal.invalid) {
       alert("please fill in all fields");
       return;
     }
+    this.actor = this.formVal.value;
+    this.service.addNewActor(this.actor);
     this.formVal.reset();
     this.toastr.showToastMessage("New actor is added.");
     this.router.navigateByUrl("/home");

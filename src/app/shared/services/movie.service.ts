@@ -43,7 +43,7 @@ export class MovieService {
       .set(movie);
   }
 
-  addNewMovie2(movie: MovieObject) {
+  addNewMovie(movie: MovieObject) {
     this.firebaseStore
       .collection<MovieObject>("movies")
       .add(JSON.parse(JSON.stringify(movie)));

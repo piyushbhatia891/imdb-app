@@ -10,14 +10,9 @@ import {
 } from "@angular/forms";
 import { MovieObject } from "../../../../shared/models/movie.model";
 import { Router } from "@angular/router";
-import { FirebaseStoreDatePipe } from "../../../../shared/pipes/firebase-store-date.pipe";
-import { firestore } from "firebase/app";
-import Timestamp = firestore.Timestamp;
-import { formatDate } from "@angular/common";
 import { Actor } from "../../../../shared/models/actor.model";
 import { Producer } from "../../../../shared/models/producer.model";
-import { ToastService } from "src/app/shared/toastr.service";
-import { element } from "protractor";
+import { ToastService } from "src/app/shared/services/toastr.service";
 
 @Component({
   selector: "app-add-movie",
@@ -30,6 +25,13 @@ export class AddMovieComponent implements OnInit {
   actorsList: Actor[] = [];
   submitted: boolean = false;
   header = "add new movie";
+
+  model: any = {};
+  movieId: string;
+  moviesData: any;
+  movie: MovieObject;
+  formVal: FormGroup;
+  actor: any;
   get f() {
     return this.formVal.controls;
   }
@@ -41,35 +43,14 @@ export class AddMovieComponent implements OnInit {
     return this.formVal.get("producers") as FormArray;
   }
 
-  model: any = {};
-  movieId: string;
-  moviesData: any;
-  movie: MovieObject;
-  formVal: FormGroup;
-  actor: any;
   constructor(
     private service: MovieService,
     private router: Router,
     private toastr: ToastService,
     private fb: FormBuilder
   ) {
-    this.service.getActors().subscribe(res => {
-      let actors = res;
-      actors.forEach(element => {
-        this.actor = {};
-        this.actor = element.payload.doc.data();
-        this.actorsList.push(this.actor);
-      });
-    });
-
-    this.service.getProducers().subscribe(res => {
-      let producers = res;
-      producers.forEach(element => {
-        this.producer = {};
-        this.producer = element.payload.doc.data();
-        this.producersList.push(this.producer);
-      });
-    });
+    this.initializeActorsList();
+    this.initializeProducersList();
   }
 
   ngOnInit() {
@@ -81,14 +62,13 @@ export class AddMovieComponent implements OnInit {
       plot: ["", Validators.required]
     });
   }
-
   addActor() {
     if (this.actorsList.length == 0) {
       alert("Navigating to add an actor link for adding first actor");
       this.router.navigateByUrl("/add-actor");
     }
     if (this.actorsList.length != this.actorsArray.length) {
-      let fg = this.fb.group({ name: "" });
+      let fg = this.createIdentities();
       this.actorsArray.push(fg);
     } else {
       alert("You cant add more actors.");
@@ -101,16 +81,11 @@ export class AddMovieComponent implements OnInit {
       this.router.navigateByUrl("/add-producer");
     }
     if (this.producersList.length != this.producersArray.length) {
-      let fg = this.fb.group({ name: "" });
+      let fg = this.createIdentities();
       this.producersArray.push(fg);
     } else {
       alert("You cant add more producers.");
     }
-  }
-  createIdentities(): FormGroup {
-    return this.fb.group({
-      name: ""
-    });
   }
 
   onSubmit() {
@@ -121,9 +96,36 @@ export class AddMovieComponent implements OnInit {
     }
     this.movie = movie;
     this.movie.date = movie.releaseDate;
-    this.service.addNewMovie2(this.movie);
+    this.service.addNewMovie(this.movie);
     this.formVal.reset();
     this.toastr.showToastMessage("New producer is added.");
     this.router.navigateByUrl("/home");
+  }
+
+  private createIdentities(): FormGroup {
+    return this.fb.group({
+      name: ""
+    });
+  }
+  private initializeProducersList() {
+    this.service.getProducers().subscribe(res => {
+      let producers = res;
+      producers.forEach(element => {
+        this.producer = {};
+        this.producer = element.payload.doc.data();
+        this.producersList.push(this.producer);
+      });
+    });
+  }
+
+  private initializeActorsList() {
+    this.service.getActors().subscribe(res => {
+      let actors = res;
+      actors.forEach(element => {
+        this.actor = {};
+        this.actor = element.payload.doc.data();
+        this.actorsList.push(this.actor);
+      });
+    });
   }
 }

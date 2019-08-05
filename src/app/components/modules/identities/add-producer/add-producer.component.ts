@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MovieService } from "../../../../shared/services/movie.service";
 import { Router } from "@angular/router";
-import { element } from "protractor";
-import { ToastService } from "src/app/shared/toastr.service";
+import { ToastService } from "src/app/shared/services/toastr.service";
 @Component({
   selector: "app-add-producer",
   templateUrl: "./add-producer.component.html",
