@@ -5,7 +5,7 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { Subject, Observable } from "rxjs";
-import { Movie, MovieObject } from "../models/movie.model";
+import { MovieObject } from "../models/movie.model";
 import { Actor } from "../models/actor.model";
 import { Producer } from "../models/producer.model";
 @Injectable({
@@ -36,7 +36,7 @@ export class MovieService {
       .doc(id)
       .snapshotChanges();
   }
-  setAndGetMovies(movie: Movie) {
+  setAndGetMovies(movie: MovieObject) {
     this.firebaseStore
       .collection("movies")
       .doc(movie.id)

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MovieService } from "../../../../shared/services/movie.service";
 import { Router } from "@angular/router";
-import { Movie, MovieObject } from "../../../../shared/models/movie.model";
+import { MovieObject } from "../../../../shared/models/movie.model";
 import { firestore } from "firebase/app";
 import Timestamp = firestore.Timestamp;
 import { formatDate } from "@angular/common";
@@ -13,8 +13,8 @@ import { formatDate } from "@angular/common";
 })
 export class MoviesListComponent implements OnInit {
   moviesList: any;
-  moviesValues: Movie[];
-  movie: Movie;
+  moviesValues: MovieObject[];
+  movie: MovieObject;
   constructor(private moviesService: MovieService, private router: Router) {
     this.moviesValues = [];
   }
@@ -28,35 +28,25 @@ export class MoviesListComponent implements OnInit {
       this.moviesList = res;
 
       this.moviesList.forEach(element => {
-        this.movie = {
-          editable: false,
-          name: element.payload.doc.data().name,
-          id: element.payload.doc.id,
-          releaseDate: element.payload.doc.data().releaseDate,
-          date: element.payload.doc.data().releaseDate,
-          actors: element.payload.doc.data().actors,
-          producers: element.payload.doc.data().producers,
-          plot: element.payload.doc.data().plot || "",
-          poster: ""
-        };
+        this.movie=element.payload.doc.data();
         this.moviesValues.push(this.movie);
       });
     });
   }
-  editMovie(movieVal: Movie) {
+  editMovie(movieVal: MovieObject) {
     this.moviesService.movieId.next(movieVal.id);
     this.moviesValues
-      .filter((movie: Movie) => {
+      .filter((movie: MovieObject) => {
         return movie.id === movieVal.id;
-        //return movie;
+        
       })
-      .map((movie: Movie) => {
+      .map((movie: MovieObject) => {
         movie.editable = true;
         return movie;
       });
-    //this.router.navigateByUrl("/edit-movie")
+    
   }
-  saveMovie(movie: Movie) {
+  saveMovie(movie: MovieObject) {
     movie.releaseDate = movie.date;
     this.moviesService.setAndGetMovies(movie);
     this.moviesService.getMovies().subscribe(res => {
