@@ -30,12 +30,9 @@
                 >{{ producer.name }},
               </span>
             </ng-template>
-            <span (click)="editMovie(movie)" *ngIf="!movie.editable">
+            <span (click)="editMovie(movie)">
               <i class="fa fa-pencil-square-o"></i>
             </span>
-            <span (click)="saveMovie(movie)" *ngIf="movie.editable"
-              ><i class="fa fa-save"></i
-            ></span>
           </div>
         </div>
         <div class="item-actors">
@@ -84,5 +81,9 @@
         </div>
       </ng-template>
     </div>
+    <app-page-title
+      *ngIf="moviesValues.length == 0"
+      [header]="'No Movies Found'"
+    ></app-page-title>
   </div>
 </div>

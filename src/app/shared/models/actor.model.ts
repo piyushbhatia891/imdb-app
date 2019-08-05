@@ -1,12 +1,6 @@
-export interface Actor {
+export class Actor {
   name: string;
   sex: string;
-  dob: string;
+  dob: Date;
   bio: string;
-}
-export class Actor {
-  name = "";
-  sex = "";
-  dob = "";
-  bio = "";
 }

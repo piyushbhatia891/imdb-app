@@ -1,13 +1,6 @@
-export interface Producer {
-  mame: string;
-  sex: string;
-  dob: string;
-  bio: string;
-}
-
 export class Producer {
-  name = "";
-  sex = "";
-  dob = "";
-  bio = "";
+  name: string;
+  sex: string;
+  dob: Date;
+  bio: string;
 }

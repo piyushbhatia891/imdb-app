@@ -17,6 +17,7 @@ import { formatDate } from "@angular/common";
 import { Actor } from "../../../../shared/models/actor.model";
 import { Producer } from "../../../../shared/models/producer.model";
 import { ToastService } from "src/app/shared/toastr.service";
+import { element } from "protractor";
 
 @Component({
   selector: "app-add-movie",
@@ -82,41 +83,34 @@ export class AddMovieComponent implements OnInit {
   }
 
   addActor() {
-    let fg = this.fb.group(new Actor());
-    this.actorsArray.push(fg);
+    if (this.actorsList.length == 0) {
+      alert("Navigating to add an actor link for adding first actor");
+      this.router.navigateByUrl("/add-actor");
+    }
+    if (this.actorsList.length != this.actorsArray.length) {
+      let fg = this.fb.group({ name: "" });
+      this.actorsArray.push(fg);
+    } else {
+      alert("You cant add more actors.");
+    }
   }
 
   addProducer() {
-    let fg = this.fb.group(new Producer());
-    this.producersArray.push(fg);
+    if (this.producersList.length == 0) {
+      alert("Navigating to add a producer link for adding producer actor");
+      this.router.navigateByUrl("/add-producer");
+    }
+    if (this.producersList.length != this.producersArray.length) {
+      let fg = this.fb.group({ name: "" });
+      this.producersArray.push(fg);
+    } else {
+      alert("You cant add more producers.");
+    }
   }
   createIdentities(): FormGroup {
     return this.fb.group({
       name: ""
     });
-  }
-
-  submitForm() {
-    if (
-      this.movie.name == "" ||
-      this.movie.actors.length == 0 ||
-      this.movie.producers.length == 0
-    ) {
-      alert("Please fill all required fields");
-      return false;
-    }
-    let date = this.movie.date;
-
-    this.movie.releaseDate = new Date(
-      date.getUTCFullYear(),
-      date.getUTCMonth(),
-      date.getUTCDate(),
-      date.getUTCHours(),
-      date.getUTCMinutes(),
-      date.getUTCSeconds()
-    );
-    this.service.addNewMovie2(this.movie);
-    this.router.navigateByUrl("/home");
   }
 
   onSubmit() {
@@ -128,7 +122,6 @@ export class AddMovieComponent implements OnInit {
     this.movie = movie;
     this.movie.date = movie.releaseDate;
     this.service.addNewMovie2(this.movie);
-
     this.formVal.reset();
     this.toastr.showToastMessage("New producer is added.");
     this.router.navigateByUrl("/home");
