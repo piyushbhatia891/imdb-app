@@ -32,3 +32,6 @@ name: string;
 sex: string;
 dob: Date;
 bio: string;
+
+There can be different angular Architecture for this project
+Which I can discuss separately.
