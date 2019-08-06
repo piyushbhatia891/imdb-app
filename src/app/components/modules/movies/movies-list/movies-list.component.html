@@ -11,6 +11,9 @@
               [(ngModel)]="movie.name"
               value="{{ movie.name }}"
             />
+            <span class="image">
+              <img src="{{ movie.poster }}" alt="" width="50px" height="30px" />
+            </span>
             <span *ngIf="!movie.editable">{{ movie.name }}</span
             ><span class="subtitle-text" *ngIf="movie.releaseDate != ''"
               >({{ movie.releaseDate | date: "longDate" }})</span

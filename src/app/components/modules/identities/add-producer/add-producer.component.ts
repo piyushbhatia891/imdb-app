@@ -38,12 +38,19 @@ export class AddProducerComponent implements OnInit {
       alert("please fill in all fields");
       return;
     }
-    let producer = this.formVal.value;
-    this.producer = producer;
-    this.service.addNewProducer(this.producer);
+    this.createProducerObjectAndSaveInDatabase();
 
+    this.resetFormAfterSaving();
+  }
+
+  private resetFormAfterSaving() {
     this.formVal.reset();
     this.toastr.showToastMessage("New producer is added.");
     this.router.navigateByUrl("/home");
+  }
+
+  private createProducerObjectAndSaveInDatabase() {
+    this.producer = this.formVal.value;
+    this.service.addNewProducer(this.producer);
   }
 }

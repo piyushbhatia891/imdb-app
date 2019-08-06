@@ -37,10 +37,18 @@ export class AddActorComponent implements OnInit {
       alert("please fill in all fields");
       return;
     }
-    this.actor = this.formVal.value;
-    this.service.addNewActor(this.actor);
+    this.createActorObjectAndSaveInDataBase();
+    this.resetFormAfterSavingInDatabase();
+  }
+
+  private resetFormAfterSavingInDatabase() {
     this.formVal.reset();
     this.toastr.showToastMessage("New actor is added.");
     this.router.navigateByUrl("/home");
+  }
+
+  private createActorObjectAndSaveInDataBase() {
+    this.actor = this.formVal.value;
+    this.service.addNewActor(this.actor);
   }
 }

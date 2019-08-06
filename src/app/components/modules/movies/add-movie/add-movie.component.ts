@@ -1,25 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MovieService } from "../../../../shared/services/movie.service";
-import {
-  NgForm,
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-  FormArray
-} from "@angular/forms";
+import { FormGroup, Validators, FormBuilder, FormArray } from "@angular/forms";
 import { MovieObject } from "../../../../shared/models/movie.model";
 import { Router } from "@angular/router";
 import { Actor } from "../../../../shared/models/actor.model";
 import { Producer } from "../../../../shared/models/producer.model";
 import { ToastService } from "src/app/shared/services/toastr.service";
+import { Uploads } from "src/app/shared/models/uploads.model";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-add-movie",
   templateUrl: "./add-movie.component.html",
   styleUrls: ["./add-movie.component.scss"]
 })
-export class AddMovieComponent implements OnInit {
+export class AddMovieComponent implements OnInit, OnDestroy {
   producer: any;
   producersList: Producer[] = [];
   actorsList: Actor[] = [];
@@ -32,6 +27,9 @@ export class AddMovieComponent implements OnInit {
   movie: MovieObject;
   formVal: FormGroup;
   actor: any;
+  progress = 0;
+  url: string = "";
+  subscription: Subscription;
   get f() {
     return this.formVal.controls;
   }
@@ -51,17 +49,30 @@ export class AddMovieComponent implements OnInit {
   ) {
     this.initializeActorsList();
     this.initializeProducersList();
+    this.subscription = this.service.uploadSubject.subscribe(
+      (upload: Uploads) => {
+        if (upload.url) {
+          this.url = upload.url;
+        }
+      }
+    );
   }
 
   ngOnInit() {
     this.formVal = this.fb.group({
       name: ["", Validators.required],
       releaseDate: ["", Validators.required],
+      poster: [null, Validators.required],
       actors: this.fb.array([]),
       producers: this.fb.array([]),
       plot: ["", Validators.required]
     });
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   addActor() {
     if (this.actorsList.length == 0) {
       alert("Navigating to add an actor link for adding first actor");
@@ -94,12 +105,24 @@ export class AddMovieComponent implements OnInit {
       alert("please fill in all fields");
       return;
     }
-    this.movie = movie;
-    this.movie.date = movie.releaseDate;
+    this.getMovieObjectToAddInDatabase(movie);
     this.service.addNewMovie(this.movie);
+    this.resetAfterSavingInDatabase();
+  }
+  startUpload(event: FileList) {
+    this.service.uploadFile(event);
+  }
+  private resetAfterSavingInDatabase() {
     this.formVal.reset();
     this.toastr.showToastMessage("New producer is added.");
     this.router.navigateByUrl("/home");
+  }
+
+  private getMovieObjectToAddInDatabase(movie: any) {
+    this.movie = movie;
+    this.movie.date = movie.releaseDate;
+    this.movie.editable = false;
+    this.movie.poster = this.url;
   }
 
   private createIdentities(): FormGroup {

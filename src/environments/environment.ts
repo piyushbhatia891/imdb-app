@@ -9,7 +9,7 @@ export const environment = {
     authDomain: "imdb-app-ccf06.firebaseapp.com",
     databaseURL: "https://imdb-app-ccf06.firebaseio.com",
     projectId: "imdb-app-ccf06",
-    storageBucket: "",
+    storageBucket: "gs://imdb-app-ccf06.appspot.com/",
     messagingSenderId: "718704132786",
     appId: "1:718704132786:web:d192c9349a4060ee"
   }

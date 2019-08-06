@@ -3,8 +3,6 @@ import { MovieService } from "../../../../shared/services/movie.service";
 import { Router } from "@angular/router";
 import { MovieObject } from "../../../../shared/models/movie.model";
 import { firestore } from "firebase/app";
-import Timestamp = firestore.Timestamp;
-import { formatDate } from "@angular/common";
 
 @Component({
   selector: "app-movies-list",
@@ -36,17 +34,14 @@ export class MoviesListComponent implements OnInit {
     });
   }
   editMovie(movieVal: MovieObject) {
-    this.moviesService.movieId.next(movieVal.id);
     this.moviesValues
       .filter((movie: MovieObject) => {
         return movie.id === movieVal.id;
-        //return movie;
       })
       .map((movie: MovieObject) => {
         movie.editable = true;
         return movie;
       });
-    //this.router.navigateByUrl("/edit-movie")
   }
   saveMovie(movie: MovieObject) {
     movie.releaseDate = movie.date;

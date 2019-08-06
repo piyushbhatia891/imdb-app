@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
 import { environment } from "../environments/environment";
 import { ComponentsModule } from "./components/components.module";
 import { RoutingModule } from "./routing/routing.module";
@@ -21,6 +22,7 @@ import { FirebaseStoreDatePipe } from "./shared/pipes/firebase-store-date.pipe";
     AngularFontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase, "imdb-app"),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     RouterModule,
     ToastrModule.forRoot()
   ],
